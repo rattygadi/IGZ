@@ -30,6 +30,9 @@ C !USES: ===============================================================
 #ifdef ALLOW_STREAMICE
 # include "STREAMICE.h"
 #endif
+#ifdef IGZ_INTRUSIONS
+# include "FFIELDS.h"
+#endif
 
 C     !INPUT/OUTPUT PARAMETERS:
 C     myTime      :: current time in simulation
@@ -43,7 +46,22 @@ CEOP
 #ifdef ALLOW_SHELFICE
 C !LOCAL VARIABLES : ====================================================
 C     i,j, bi,bj  :: loop indices
+C     deg2km      :: degree to km conversion
+C     km2m        :: km to m conversion
+C     dum_fac     :: variable that accounts for assymetric tidal 
+C                    deflection of the ice-shelf
+C     n           :: variable that calculates  what multiple of 
+C                    time period is going on
+C     dum_fac1    :: dummy variable
+
       INTEGER bi,bj,i,j
+      REAL*8 deg2km
+      PARAMETER ( deg2km=111.4 )
+      REAL*8 km2m
+      PARAMETER ( km2m=1000.0)
+      _RL dum_fac
+      REAL*8 n
+      REAL*8 dum_fac1
 
       IF ( SHELFICEMassStepping ) THEN
 
@@ -81,8 +99,84 @@ C     i,j, bi,bj  :: loop indices
 
            DO j=1-OLy,sNy+OLy
             DO i=1-OLx,sNx+OLx
-              shelficeMass(i,j,bi,bj) = shelficeMass(i,j,bi,bj)
+#ifdef ALLOW_3D_GZ
+             dum_fac1=1028.0*amp_t*2.0/PI/Time_period
+             n = REAL(FLOOR(myTime/Time_period),8)
+             IF  (myTime>=n*Time_period.AND.
+     &            myTime<=(n+0.5)*Time_period) THEN
+               GL_3D(i,j,bi,bj)=GL_3D(i,j,bi,bj)
+     &              -(GZ_3D(i,j,bi,bj)/(km2m*deg2km*Time_period))
+     &              *deltaT
+             ELSE
+               GL_3D(i,j,bi,bj)=GL_3D(i,j,bi,bj)
+     &              +(GZ_3D(i,j,bi,bj)/(km2m*deg2km*Time_period))
+     &              *deltaT*facm
+             ENDIF
+             dum_fac=SIN(2.0*PI/Time_period*(myTime+
+     &                 deltaT/2.0))*side_stress(i,j,bi,bj)
+             IF ( yC(i,j,bi,bj)>=GL_3D(i,j,bi,bj).AND.
+     &            yC(i,j,bi,bj)<=ice_front_3D(i,j,bi,bj) ) THEN
+               IF ( yC(i,j,bi,bj)<=FZ_3D(i,j,bi,bj)) THEN
+                shelficeMassDynTendency(i,j,bi,bj)=-1.0*
+     &           ((yC(i,j,bi,bj)-GL_3D(i,j,bi,bj))
+     &           /(FZ_3D(i,j,bi,bj)-GL_3D(i,j,bi,bj)))*
+     &           dum_fac*deltaT*dum_fac1
+               ELSE
+                shelficeMassDynTendency(i,j,bi,bj)=-1.0
+     &          *dum_fac*deltaT*dum_fac1
+               ENDIF
+             ELSE
+                shelficeMassDynTendency(i,j,bi,bj)=0.0
+             ENDIF
+#endif /* ALLOW_3D_GZ */
+#ifdef ALLOW_GL_MIGRATION
+             dum_fac1=1028.0*amp_t*2.0*PI/Time_period
+             n = REAL(FLOOR(myTime/Time_period),8)
+             IF (myTime>=n*Time_period.AND.
+     &           myTime<=(n+0.5)*Time_period) THEN
+               GL_loc_1(i,j,bi,bj)=GL_loc_1(i,j,bi,bj)
+     &              -(GL_dist/(km2m*deg2km*Time_period))
+     &                 *deltaT
+             ELSE
+               GL_loc_1(i,j,bi,bj)=GL_loc_1(i,j,bi,bj)
+     &               +(GL_dist/(km2m*deg2km*Time_period))
+     &                  *deltaT*facm
+             ENDIF
+             IF (myTime<=Time_period/4.0.OR.myTime>=
+     &          3.0*Time_period/4.0) THEN
+               dum_fac=SIN(2.0*PI/Time_period*(myTime+
+     &                 deltaT/2.0))
+C                dum_fac=1.0
+             ELSE 
+               dum_fac=SIN(2.0*PI/Time_period*(myTime+
+     &                 deltaT/2.0))
+C                dum_fac=-1.0
+             ENDIF
+             IF ( yC(i,j,bi,bj)>=GL_loc_1(i,j,bi,bj).AND.
+     &            yC(i,j,bi,bj)<=ice_f ) THEN
+               IF ( yC(i,j,bi,bj)<=GZ_extent) THEN
+                shelficeMassDynTendency(i,j,bi,bj)=-1.0*
+     &           ((yC(i,j,bi,bj)-GL_loc_1(i,j,bi,bj))
+     &           /(GZ_extent-GL_loc_1(i,j,bi,bj)))*
+     &           dum_fac*deltaT*dum_fac1
+               ELSE
+                shelficeMassDynTendency(i,j,bi,bj)=-1.0
+     &          *dum_fac*deltaT*dum_fac1
+               ENDIF
+C            dm/dt = C * f(y) * SIN(2*PI/Time_period*T) where T is the
+C            timestamp; C = 30
+             ENDIF
+#endif /* ALLOW_GL_MIGRATION */
+#ifdef IGZ_INTRUSIONS
+	     shelfIceMassDynTendency(i,j,bi,bj) = Dynmass(i,j,bi,bj)
+#endif /* IGZ_INTRUSIONS */
+             IF (.NOT.usenonlinearDyntimestep) THEN
+                shelficeMass(i,j,bi,bj) = shelficeMass(i,j,bi,bj)
      &              + shelfIceMassDynTendency(i,j,bi,bj)*deltaT
+             ELSE
+                shelficeMass(i,j,bi,bj) = shelficeMass(i,j,bi,bj)
+     &              + shelfIceMassDynTendency(i,j,bi,bj)
+             ENDIF
             ENDDO
            ENDDO
 
@@ -99,13 +193,26 @@ C--    quick fix to prevent ice-shelf mass to become negative
        ENDIF
 
        _EXCH_XY_RL( shelficeMass, myThid )
-
+#ifdef ALLOW_GL_MIGRATION
+       _EXCH_XY_RL( GL_loc_1, myThid )
+#endif
+#ifdef ALLOW_3D_GZ
+       _EXCH_XY_RL( GL_3D, myThid)
+#endif
       ENDIF
 
 #ifdef ALLOW_DIAGNOSTICS
       IF (useDiagnostics) THEN
         CALL DIAGNOSTICS_FILL( shelficeMass, 'SHI_mass',
      I                         0, 1, 0, 1, 1, myThid )
+#ifdef ALLOW_GL_MIGRATION
+        CALL DIAGNOSTICS_FILL( GL_loc_1, 'GL      ',
+     &			       0, 1, 0, 1, 1, myThid )
+#endif
+#ifdef ALLOW_3D_GZ
+        CALL DIAGNOSTICS_FILL ( GL_3D, 'GL_3D   ',
+     &                         0, 1, 0, 1, 1, myThid )
+#endif
       ENDIF
 #endif /* ALLOW_DIAGNOSTICS */
 #endif /* ALLOW_SHELFICE */

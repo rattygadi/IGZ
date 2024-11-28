@@ -138,6 +138,14 @@ C-    read SHELFICE 2-D fields for restart
         IF ( seqFlag.EQ.1 .AND. SHELFICEMassStepping ) THEN
           CALL READ_MFLDS_3D_RL( 'SHI_mass', shelficeMass,
      &                                 nj, fp, 1 , nIter0, myThid )
+#ifdef ALLOW_GL_MIGRATION
+          CALL READ_MFLDS_3D_RL( 'GL_loc_1', GL_loc_1,
+     &                                 nj, fp, 1, nIter0, myThid )
+#endif
+#ifdef ALLOW_3D_GZ
+          CALL READ_MFLDS_3D_RL( 'GL_3D   ', GL_3D,
+     &                                 nj, fp, 1, nIter0, myThid )
+#endif   
         ENDIF
 
 #ifdef ALLOW_SHELFICE_REMESHING

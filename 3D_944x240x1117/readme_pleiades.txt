@@ -3,7 +3,7 @@
 ==============
 # 1. Get code
   git clone git@github.com:rattygadi/IGZ
-  Git clone https://github.com/MITgcm/MITgcm.git -b checkpoint68c
+  git clone https://github.com/MITgcm/MITgcm.git -b checkpoint68c
   cd MITgcm
   mkdir build run
 

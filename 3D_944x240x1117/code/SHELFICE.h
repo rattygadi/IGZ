@@ -20,6 +20,8 @@ C     SHELFICEloadAnomalyFile  :: name of shelfice load anomaly file
 C     SHELFICEMassDynTendFile  :: file name for other mass tendency
 C                                 (e.g. dynamics)
 C     useISOMIPTD              :: use simple ISOMIP thermodynamics, def: F
+C     usenonlinearDyntimestep  :: uses a non-linear function to time step
+C                                 the mass of the ice-shelf, def : F
 C     SHELFICEconserve         :: use conservative form of H&O-thermodynamics
 C                                 following Jenkins et al. (2001, JPO), def: F
 C     SHELFICEMassStepping     :: flag to step forward ice shelf mass/thickness
@@ -113,6 +115,51 @@ C                           =maskC for rest of k values
 C                           Used with ice shelf fwflx
 C                           or shiTransCoeffT/S ctrl.
 #endif
+#ifdef ALLOW_GL_MIGRATION 
+C   GL_loc            ::  Initial position of the grounding line
+C                         (units depend on the co-ordinate system
+C                          employed; m for cartesian grids, degrees
+C                          for spherical/cylindrical grids)
+C   Time_period       ::  The time period over which the GL migrates
+C   GL_dist           ::  The distance the GL migrates 
+C   facm              ::  A factor to encorporate the non-symmetric
+C                         migration of the GL (observed phenomenon)
+C   GL_loc_1          ::  A copy of grounding line provided to
+C                         all threads
+C   ice_f             ::  Location of ice-front (units depends on
+C                         the co-ordinate system employed; m for
+C                         cartesian grids, degrees for spherical/
+C                         cylindrical grids)
+C   GZ_extent         ::  The seaward limit of the GZ. The units are
+C                         same as the GL_loc. Post this limit, the whole
+C                         ice-shelf moves like riding a wave.
+C   amp_t             ::  The tidal amplitude of the ice-shelf (outside 
+C                         the flexure zone of the ice-shelf)
+#endif /* ALLOW_GL_MIGRATION */
+#ifdef ALLOW_3D_GZ
+C   GL3Dfilename      ::  A filename that inputs the 3D low tide/initial
+C                         GL position
+C   GL_3DInit         ::  Initial 2D GL position
+C   GL_3D             ::  Dynamic 2D GL position
+C   GZ3Dfilename      ::  A filename that provides the landward limit of 
+C                         GZ cavity.
+C   GZ_3D             ::  2D GZ width along flowlines
+C   FZ3Dfilename      ::  A filename that provides the flexure zone 
+C                         seaward limit 
+C   FZ_3D             ::  FZ seaward limit
+C   Time_period       ::  Time period over which GL migrations happen
+C   amp_t             ::  Tidal amplitude
+C   front3Dfilename   ::  A filename that provides the seaward limit of
+C                         ice front
+C   ice_front_3D      :: the seaward limit of the ice-front
+C   facm              ::  A factor to encorporate the non-symmetric
+C                         migration of the GL (observed phenomenon)
+C   perpFZfilename    ::  A mask filename that defines the side 
+C                         buttressing effects of the ice-shelf
+C   side_stress       ::  A mask filename defined through perpFZfilename
+C                         accouting for side-buttressing effects and
+C                         observed FZ on the side
+#endif /*ALLOW_3D_GZ */
 C-----------------------------------------------------------------------
 C \ev
 CEOP
@@ -158,8 +205,10 @@ CEOP
      &     shelficeLoadAnomaly,
      &     shelficeForcingT, shelficeForcingS,
      &     shiTransCoeffT, shiTransCoeffS,
-     &     shiCDragFld, shiDragQuadFld
+     &     shiCDragFld, shiDragQuadFld,
+     &     GL_loc_1
 
+      _RL GL_loc_1              (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       _RL shelficeMass          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       _RL shelficeMassInit      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       _RL shelficeLoadAnomaly   (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
@@ -192,8 +241,44 @@ CEOP
       _RS shelficeDragV(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
 #endif /* ALLOW_DIAGNOSTICS */
 
+#ifdef ALLOW_GL_MIGRATION
+      COMMON /SHELFICE_GL_MIGRATE/ GL_loc, Time_period,
+     &  GL_dist, facm, ice_f, GZ_extent, amp_t
+C    &  GL_loc_1
+      _RL GL_loc
+      _RL Time_period
+      _RL GL_dist
+      _RL facm
+      _RL ice_f
+      _RL GZ_extent
+      _RL amp_t
+C      _RL GL_loc_1(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+#endif /* ALLOW_GL_MIGRATION */
+
+#ifdef ALLOW_3D_GZ
+      COMMON /SHELFICE_3D_GZ/ GL3Dfilename, GL_3DInit,
+     &  GL_3D, GZ_3D, GZ3Dfilename, FZ3Dfilename,
+     &  Time_period, amp_t, FZ_3D, front3Dfilename,
+     &  ice_front_3D,facm, perpFZfilename, side_stress
+      _RL GL_3DInit(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL GL_3D(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL GZ_3D(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL FZ_3D(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL ice_front_3D(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL side_stress(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL Time_period
+      _RL amp_t
+      _RL facm
+      CHARACTER*(MAX_LEN_FNAM) GL3Dfilename
+      CHARACTER*(MAX_LEN_FNAM) GZ3Dfilename
+      CHARACTER*(MAX_LEN_FNAM) FZ3Dfilename
+      CHARACTER*(MAX_LEN_FNAM) front3Dfilename
+      CHARACTER*(MAX_LEN_FNAM) perpFZfilename
+#endif /* ALLOW_3D_GZ */
+
       LOGICAL SHELFICEisOn
       LOGICAL useISOMIPTD
+      LOGICAL usenonlinearDyntimestep
       LOGICAL SHELFICEconserve
       LOGICAL SHELFICEboundaryLayer
       LOGICAL SHI_withBL_realFWflux
@@ -212,6 +297,7 @@ CEOP
       COMMON /SHELFICE_PARMS_L/
      &     SHELFICEisOn,
      &     useISOMIPTD,
+     &     usenonlinearDyntimestep,
      &     SHELFICEconserve,
      &     SHELFICEboundaryLayer,
      &     SHI_withBL_realFWflux,

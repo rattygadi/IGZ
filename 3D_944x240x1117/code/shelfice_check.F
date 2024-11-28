@@ -152,6 +152,34 @@ C-    I/O parameters:
      & 'SHELFICE_dumpFreq =', ' /* analoguous to dumpFreq */')
        CALL WRITE_0D_RL( SHELFICE_taveFreq, INDEX_NONE,
      & 'SHELFICE_taveFreq =', ' /* analoguous to taveFreq */')
+#ifdef ALLOW_GL_MIGRATION
+       CALL WRITE_0D_RL( GL_loc, INDEX_NONE,
+     & 'GL_loc =', ' /* Initial Grounding Line Position */')
+       CALL WRITE_0D_RL( GL_dist, INDEX_NONE,
+     & 'GL_dist =',' /* Total GL migration distance */')
+       CALL WRITE_0D_RL( Time_period, INDEX_NONE,
+     & 'Time_period =',' /* Tidal period */')
+       CALL WRITE_0D_RL( facm, INDEX_NONE,
+     & 'facm =',' /* Factor accounting assymetry */')
+       CALL WRITE_0D_RL( ice_f,INDEX_NONE,
+     & 'ice_f =',' /* Ice front location */')
+       CALL WRITE_0D_RL( GZ_extent,INDEX_NONE,
+     & 'GZ_extent=',' /* end point of GZ */')
+       CALL WRITE_0D_RL( amp_t, INDEX_NONE,
+     & 'amp_t =',' /* Tidal amplitude */')
+#endif /* ALLOW_GL_MIGRATION */
+#ifdef ALLOW_3D_GZ
+       CALL WRITE_0D_C( GL3Dfilename, -1, INDEX_NONE,
+     &  'GL3Dfilename=', ' /* file name of 3D GL */')
+       CALL WRITE_0D_C( GZ3Dfilename, -1, INDEX_NONE, 
+     &  'GZ3Dfilename=',' /* file name of 3D GZ */')
+       CALL WRITE_0D_C( FZ3Dfilename, -1, INDEX_NONE,
+     &  'FZ3Dfilename=',' /* file name of 3D FZ*/')
+       CALL WRITE_0D_C( front3Dfilename, -1, INDEX_NONE,
+     &  'front3Dfilename=',' /* 3D ice front */')
+       CALL WRITE_0D_C( perpFZfilename, -1, INDEX_NONE,
+     &  'perpFZfilename=',' /* filename of across FZ*/')
+#endif /* ALLOW_3D_GZ */
 
       WRITE(msgBuf,'(A)')
      &     'SHELFICE_CHECK: end of SHELFICE config. summary'

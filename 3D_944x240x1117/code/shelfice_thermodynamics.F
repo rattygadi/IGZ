@@ -326,6 +326,15 @@ C      static contribution and etaN dynamical contribution:
 c         pLoc(I,J) = ABS(R_shelfIce(I,J,bi,bj))
 C-    new and accurate pLoc expression (just the weight of the ice):
           pLoc(I,J) = shelficeMass(I,J,bi,bj)*gravity*SItodBar
+C# ifdef ALLOW_GL_MIGRATION
+C     Ensures that the pressure landward of GL stays equal to the 
+C     initial hydrostatic pressure of the cavity. For now, the value
+C     of the ice-shelf draft is hardcoded (466.0). In the future, it will
+C     be automated. 
+C          IF ( yC(i,j,bi,bj)<=GL_loc_1(i,j,bi,bj)) THEN
+C             pLoc(I,J) = 1020.0*gravity*566.0*SItodBar
+C          ENDIF
+C# endif /* ALLOW_GL_MIGRATION */
           tLoc(I,J) = theta(I,J,K,bi,bj)
           sLoc(I,J) = MAX(salt(I,J,K,bi,bj), zeroRL)
           velSq(I,J)= 0.
@@ -749,6 +758,11 @@ c     ENDIF
      &      0,1,0,1,1,myThid)
        CALL DIAGNOSTICS_FILL_RS(shelfIceHeatFlux,      'SHIhtFlx',
      &      0,1,0,1,1,myThid)
+       CALL DIAGNOSTICS_FILL(shelficeMassDynTendency, 'SHI_dmdt',
+     &      0,1,0,1,1,myThid)
+C#ifdef ALLOW_GL_MIGRATION
+C       CALL DIAGNOSTICS_FILL(GL_loc_1,'GL      ',0,1,0,1,1,myThid)
+C#endif
 C     SHIForcT (Ice shelf forcing for theta [W/m2], >0 increases theta)
        tmpFac = HeatCapacity_Cp*rUnit2mass
        CALL DIAGNOSTICS_SCALE_FILL(shelficeForcingT,tmpFac,1,

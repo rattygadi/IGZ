@@ -48,7 +48,7 @@ CEOP
      &     no_slip_shelfice, SHELFICEDragLinear,
      &     SHELFICEDragQuadratic, SHELFICEselectDragQuadr,
      &     SHELFICEthetaSurface,
-     &     useISOMIPTD,
+     &     useISOMIPTD, usenonlinearDyntimestep,
      &     SHELFICEconserve, SHELFICEboundaryLayer,
      &     SHI_withBL_realFWflux, SHI_withBL_uStarTopDz,
      &     SHELFICEwriteState,
@@ -67,6 +67,22 @@ CEOP
 #ifdef ALLOW_COST
      &     mult_shelfice,
      &     mult_shifwflx, wshifwflx0, shifwflx_errfile,
+#endif
+#ifdef ALLOW_GL_MIGRATION
+     &     GL_loc, Time_period,
+     &     GL_dist, facm, ice_f,
+     &     GZ_extent, amp_t,
+C     &     GL_loc_1
+C    GL_loc_1 is a copy of GL_loc but done on multiple threads. 
+C    In other words, its an array holding the same value
+#endif
+#ifdef ALLOW_3D_GZ
+     &     GL3Dfilename, GL_3DInit, 
+     &     GL_3D, GZ_3D, GZ3Dfilename,
+     &     FZ3Dfilename, Time_period, amp_t,
+     &     FZ_3D, front3Dfilename, 
+     &     ice_front_3D, facm,
+     &     perpFZfilename, side_stress,
 #endif
      &     SHELFICEremeshFrequency,
      &     SHELFICEsplitThreshold, SHELFICEmergeThreshold
@@ -92,6 +108,7 @@ C internal flag to indicate we are in business
 
 C Set defaults values for parameters in SHELFICE.h
       useISOMIPTD              = .FALSE.
+      usenonlinearDyntimestep  = .FALSE.
       SHELFICEconserve         = .FALSE.
       SHELFICEboundaryLayer    = .FALSE.
       SHI_withBL_realFWflux    = .FALSE.
@@ -136,6 +153,26 @@ C these params. are default of Holland and Jenkins (1999)
       mult_shifwflx            = 0. _d 0
       wshifwflx0               = 0. _d 0
       shifwflx_errfile         = ' '
+#endif
+#ifdef ALLOW_GL_MIGRATION
+      GL_loc                   = 0. _d 0
+      Time_period              = 43200.0
+      GL_dist                  = 0. _d 0
+      facm                     = 1. _d 0
+      ice_f                    = 0. _d 0
+      GZ_extent                = 0. _d 0
+      amp_t                    = 1. _d 0
+#endif
+#ifdef ALLOW_3D_GZ
+      GL3Dfilename             = ' '
+      GZ3Dfilename             = ' '
+      FZ3Dfilename             = ' '
+      front3Dfilename          = ' '
+      Time_period              = 43200.0
+      amp_t                    = 1. _d 0
+      facm                     = 1. _d 0
+      perpFZfilename           = ' '
+C      GL_3D                    = 0. _d 0
 #endif
 #ifdef ALLOW_MNC
       SHELFICE_tave_mnc = timeave_mnc

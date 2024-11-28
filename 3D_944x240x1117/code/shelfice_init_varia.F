@@ -44,6 +44,12 @@ CEOP
            shelficeMass          (i,j,bi,bj) = 0. _d 0
            shiCDragFld           (i,j,bi,bj) = 0. _d 0
            shiDragQuadFld        (i,j,bi,bj) = 0. _d 0
+#ifdef ALLOW_GL_MIGRATION
+           GL_loc_1              (i,j,bi,bj) = GL_loc
+#endif
+#ifdef ALLOW_3D_GZ
+           GL_3D (i,j,bi,bj) = GL_3DInit (i,j,bi,bj)
+#endif 
          ENDDO
         ENDDO
        ENDDO

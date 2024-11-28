@@ -77,6 +77,13 @@ C-----------------------------------------------------------------------
           shelficeMassInit   (i,j,bi,bj) = 0. _d 0
           shelficeLoadAnomaly(i,j,bi,bj) = 0. _d 0
           shelfIceMassDynTendency(i,j,bi,bj) = 0. _d 0
+C#ifdef ALLOW_GL_MIGRATION
+C          GL_loc_1(i,j,bi,bj) = 0. _d 0
+C#endif
+C#ifdef ALLOW_3D_GZ
+C          GL_3DInit(i,j,bi,bj) = 0. _d 0
+C          #GZ_3D(i,j,bi,bj)     = 0. _d 0
+C#endif
          ENDDO
         ENDDO
        ENDDO
@@ -166,7 +173,48 @@ c--   use weight as mask
       _EXCH_XY_RL( shelficeMassInit, myThid )
       CALL WRITE_FLD_XY_RL ( 'shelficemassinit', ' ',
      &                       shelficeMassInit, 0, myThid )
+#ifdef ALLOW_3D_GZ     
+      IF ( GL3Dfilename.NE.'  ' ) THEN
+       CALL READ_FLD_XY_RL( GL3Dfilename, ' ',
+     &                      GL_3DInit, 0, myThid )
+      ENDIF
+      _EXCH_XY_RL( GL_3DInit, myThid)
+      CALL WRITE_FLD_XY_RL ( 'GL_3DInit', ' ',
+     &                       GL_3DInit, 0, myThid)
 
+      IF ( GZ3Dfilename.NE.'  ' ) THEN
+       CALL READ_FLD_XY_RL( GZ3Dfilename, ' ',
+     &                      GZ_3D, 0, myThid)
+      ENDIF
+      _EXCH_XY_RL( GZ_3D, myThid)
+      CALL WRITE_FLD_XY_RL ( 'GZ_3D', ' ',
+     &                       GZ_3D, 0, myThid)
+
+      IF ( FZ3Dfilename.NE.'  ' ) THEN
+       CALL READ_FLD_XY_RL( FZ3Dfilename, ' ',
+     &                       FZ_3D, 0, myThid)
+      ENDIF
+      _EXCH_XY_RL( FZ_3D, myThid)
+      CALL WRITE_FLD_XY_RL ( 'FZ_3D', ' ',
+     &                        FZ_3D, 0, myThid)
+ 
+      IF ( front3Dfilename.NE.' ') THEN
+       CALL READ_FLD_XY_RL( front3Dfilename, ' ',
+     &                       ice_front_3D, 0, myThid)
+      ENDIF
+      _EXCH_XY_RL( ice_front_3D, myThid)
+      CALL WRITE_FLD_XY_RL ( 'ice front 3D', ' ',
+     &                         ice_front_3D, 0, myThid)
+
+      IF ( perpFZfilename.NE.' ') THEN
+       CALL READ_FLD_XY_RL( perpFZfilename, ' ',
+     &                         side_stress, 0, myThid)
+      ENDIF
+      _EXCH_XY_RL( side_stress, myThid)
+      CALL WRITE_FLD_XY_RL ( 'side_stress', ' ',
+     &                         side_stress, 0, myThid)
+
+#endif 
 c     IF ( SHELFICEloadAnomalyFile .EQ. ' ' ) THEN
 C-   In case we need shelficeLoadAnomaly in phi0surf for initial pressure
 C    calculation (if using selectP_inEOS_Zc=2 or 3)
@@ -263,6 +311,39 @@ c     ENDIF
        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I      diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
+       diagName   = 'SHI_dmdt'
+       diagTitle  = 'dynamic ice shelf mass tendency term'
+       diagUnits  = 'kg/s           '
+       diagCode   = 'SM      L1     '
+       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I      diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+
+       diagName   = 'GL'
+       diagTitle  = 'Time vaying Grounding line location'
+       diagUnits  = 'degrees        '
+       diagCode   = 'SM      L1     '
+       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I      diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+
+#ifdef ALLOW_GL_MIGRATION
+       diagName   = 'GL_loc_1'
+       diagTitle  =
+     &  'Time varying Grounding line location (dynamic)'
+       diagUnits  = 'degrees        '
+       diagCode   = 'SM      L1     '
+       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+            diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+#endif
+
+#ifdef ALLOW_3D_GZ
+       diagName   = 'GL_3D'
+       diagTitle  = '2D Grounding line location'
+       diagUnits  = 'degrees        '
+       diagCode   = 'SM      L1     '
+       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     &      diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+#endif
+
 #ifdef SHI_ALLOW_GAMMAFRICT
        diagName  = 'SHIuStar'
        diagTitle = 'Friction velocity at bottom of ice shelf'
@@ -286,6 +367,13 @@ c     ENDIF
        diagCode  = 'SM      L1      '
        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I      diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+       
+C       diagName  = 'SHI_dmdt'
+C       diagTitle = 'Ice-shelf dynamic mass tendency'
+C       diagUnits = 'kg/s            '
+C       diagCode  = 'SM      L1      '
+C       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+C            diagName, diagCode, diagUnits, diagTitle, 0, myThid)
 #endif
 
 # ifdef ALLOW_AUTODIFF

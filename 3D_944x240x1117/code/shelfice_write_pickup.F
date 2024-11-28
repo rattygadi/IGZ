@@ -80,7 +80,20 @@ C-    switch to 2-D fields:
         CALL WRITE_REC_3D_RL( fn, fp, 1, ShelficeMass,
      &                        nj, myIter, myThid )
         IF (j.LE.listDim) wrFldList(j) = 'SHI_mass'
-
+#ifdef ALLOW_GL_MIGRATION
+        j = j + 1
+        nj = nj - 1
+        CALL WRITE_REC_3D_RL( fn, fp, 1, GL_loc_1,
+     &                        nj, myIter, myThid )
+        IF (j.LE.listDim) wrFldList(j) = 'GL_loc_1'
+#endif
+#ifdef ALLOW_3D_GZ
+        j = j + 1
+        nj = nj - 1
+        CALL WRITE_REC_3D_RL( fn, fp, 1, GL_3D,
+     &                        nj, myIter, myThid )
+        IF (j.LE.listDim) wrFldList(j) = 'GL_3D   '
+#endif
       ENDIF ! SHELFICEMassStepping
 
 #ifdef ALLOW_SHELFICE_REMESHING
