@@ -123,6 +123,10 @@ C     apressure :: Atmospheric surface pressure field in Pa
 C                  Typical range: 88000 < apressure < 108000
 C                  Input field
 C
+C     dmdt      :: The mass change tendency term of the ice-sheet/
+C                  ice-shelf system to incorporate the tidal flexing
+C                  of the ice and the tidal seawater intrusions.
+C
 C     tidePot   :: Tidal geopotential forcing in m^2/s^2
 C                  Typical range: -10 < tidePot < +10
 C                  Input field
@@ -268,6 +272,13 @@ C     zen_fsol_daily     :: incoming solar radiation (daily mean)
       _RL apressure (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       _RL apressure0(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       _RL apressure1(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+#endif
+
+#ifdef IGZ_INTRUSIONS
+      COMMON /exf_dmdt_r/ dmdt, dmdt0, dmdt1
+      _RL dmdt (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL dmdt0(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      _RL dmdt1(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
 #endif
 
 #ifdef ALLOW_RUNOFF

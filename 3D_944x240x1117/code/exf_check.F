@@ -307,6 +307,15 @@ c     ENDIF
       ENDIF
 #endif /* ndef ATMOSPHERIC_LOADING */
 
+#ifndef IGZ_INTRUSIONS
+      IF ( dmdtfile.NE.' ') THEN
+        WRITE(msgBuf,'(3A)') 'EXF_CHECK: Cannot read-in field ',
+     &    '"dmdt" with #undef IGZ_INTRUSIONS'
+        CALL PRINT_ERROR( msgBuf, myThid )
+        errCount = errCount + 1
+      ENDIF
+#endif /* IGZ_INTRUSIONS */
+
 #ifndef EXF_ALLOW_TIDES
       IF ( tidePotFile.NE.' ' ) THEN
         WRITE(msgBuf,'(3A)') 'EXF_CHECK: Cannot read-in field ',

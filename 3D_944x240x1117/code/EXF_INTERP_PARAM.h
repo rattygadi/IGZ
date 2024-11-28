@@ -105,6 +105,9 @@ C----
       _RL apressure_lon0,apressure_lon_inc
       _RL apressure_lat0,apressure_lat_inc(MAX_LAT_INC)
       INTEGER apressure_nlon,apressure_nlat,apressure_interpMethod
+      _RL dmdt_lon0,dmdt_lon_inc
+      _RL dmdt_lat0,dmdt_lat_inc(MAX_LAT_INC)
+      INTEGER dmdt_nlon,dmdt_nlat,dmdt_interpMethod
       _RL tidePot_lon0,tidePot_lon_inc
       _RL tidePot_lat0,tidePot_lat_inc(MAX_LAT_INC)
       INTEGER tidePot_nlon,tidePot_nlat,tidePot_interpMethod
@@ -164,6 +167,8 @@ C----
      & lwdown_lat0, lwdown_lat_inc,
      & apressure_lon0, apressure_lon_inc,
      & apressure_lat0, apressure_lat_inc,
+     & dmdt_lon0, dmdt_lon_inc,
+     & dmdt_lat1, dmdt_lat_inc,
      & tidePot_lon0, tidePot_lon_inc,
      & tidePot_lat0, tidePot_lat_inc,
      & areamask_lon0, areamask_lon_inc,
@@ -192,6 +197,7 @@ C----
      & swdown_nlon, swdown_nlat, swdown_interpMethod,
      & lwdown_nlon, lwdown_nlat, lwdown_interpMethod,
      & apressure_nlon, apressure_nlat, apressure_interpMethod,
+     & dmdt_nlon, dmdt_nlat, dmdt_interpMethod,
      & tidePot_nlon, tidePot_nlat, tidePot_interpMethod,
      & areamask_nlon, areamask_nlat, areamask_interpMethod
 

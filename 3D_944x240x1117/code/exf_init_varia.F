@@ -328,6 +328,20 @@ C      will be over-written at first time-step when calling EXF_SET_UV.
      I     myThid )
 #endif /* ATMOSPHERIC_LOADING */
 
+#ifdef IGZ_INTRUSIONS
+      CALL EXF_INIT_FLD(
+     I     'dmdt', dmdtfile, dmdtmask,
+     I     dmdtperiod, exf_inscal_dmdt, dmdtconst,
+     O     dmdt, dmdt0, dmdt1,
+#ifdef USE_EXF_INTERPOLATION
+     I     dmdt_lon0, dmdt_lon_inc,
+     I     dmdt_lat0, dmdt_lat_inc,
+     I     dmdt_nlon, dmdt_nlat, xC, yC,
+     I     dmdt_interpMethod,
+#endif
+     I     myThid )
+#endif /* IGZ_INTRUSIONS */
+
 #ifdef EXF_ALLOW_TIDES
       CALL EXF_INIT_FLD(
      I     'tidePot', tidePotFile, tidePotMask,

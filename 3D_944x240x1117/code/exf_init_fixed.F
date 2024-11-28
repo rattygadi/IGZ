@@ -75,6 +75,7 @@ C     ' ' = no masking; 'c' = centered mask; 'w' = western mask; 's' = southern
       swdownmask   = 'c'
       lwdownmask   = 'c'
       apressuremask= 'c'
+      dmdtmask     = 'c'
       tidePotmask  = 'c'
       areamaskmask = 'c'
       climsstmask  = 'c'
@@ -106,6 +107,7 @@ c      saltflxmask  = ' '
 c      lwfluxmask   = ' '
 c      lwdownmask   = ' '
        apressuremask= ' '
+       dmdtmask     = ' '
 c      tidePotmask  = ' '
 c      areamaskmask = ' '
 c      climsstmask  = ' '
@@ -366,6 +368,20 @@ C     from the beginning of the year.
      I                    myThid )
       ENDIF
 #endif /* ATMOSPHERIC_LOADING */
+
+#ifdef IGZ_INTRUSIONS
+      IF ( dmdtfile.NE. ' ') THEN
+# ifdef ALLOW_DEBUG
+       IF (debugMode)
+     &    CALL DEBUG_CALL('GETFFIELD_START dmdt',myThid)
+#endif
+       CALL EXF_GETFFIELD_START( useExfYearlyFields,
+     I                    'exf', 'dmdt', dmdtperiod,
+     I                    dmdtstartdate1, dmdtstartdate2,
+     U                    dmdtStartTime, errCount,
+     I                    myThid )
+      ENDIF
+#endif /* IGZ_INTRUSIONS */
 
 #ifdef EXF_ALLOW_TIDES
       IF ( tidePotFile .NE. ' ' ) THEN

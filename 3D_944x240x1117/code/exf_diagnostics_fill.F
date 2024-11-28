@@ -69,6 +69,9 @@ CEOP
 #ifdef ATMOSPHERIC_LOADING
         CALL DIAGNOSTICS_FILL( apressure, 'EXFpress',0,1,0,1,1,myThid )
 #endif
+#ifdef IGZ_INTRUSIONS
+        CALL DIAGNOSTICS_FILL( dmdt,      'EXFdmdt ',0,1,0,1,1,myThid )
+#endif
 #ifdef ALLOW_RUNOFF
         CALL DIAGNOSTICS_FILL( runoff,    'EXFroff ',0,1,0,1,1,myThid )
 #endif

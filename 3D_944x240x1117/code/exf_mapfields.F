@@ -332,6 +332,16 @@ C-    subtract "surf_pRef" to fill in atmos. pressure anomaly "pLoad"
           ENDDO
 #endif
 
+#ifdef IGZ_INTRUSIONS
+C-     writes the mass change imported through EXF package into the 'Dynmass'
+C-     variable defined in the FFIELDS.h
+          DO j = jmin,jmax
+            DO i = imin,imax
+             Dynmass(i,j,bi,bj)=exf_outscal_dmdt*dmdt(i,j,bi,bj)
+            ENDDO
+          ENDDO
+#endif 
+
 #ifdef EXF_ALLOW_TIDES
           DO j = jmin,jmax
             DO i = imin,imax

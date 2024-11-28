@@ -186,6 +186,11 @@ C       Print some statistics about input forcing fields
      &              maskInC, maskInC, rA , drF, dummyRL, myThid )
         ENDIF
 #endif
+#ifdef IGZ_INTRUSIONS
+        IF ( dmdtfile .NE. ' ' ) THEN
+          CALL MON_WRITESTATS_RL( 1, dmdt, '_dmdt',
+     &             maskInC, maskInC, rA , drF, dummyRL, myThid )
+#endif 
 #ifdef ALLOW_RUNOFF
         IF ( runofffile .NE. ' ' ) THEN
           CALL MON_WRITESTATS_RL( 1, runoff,  '_runoff',

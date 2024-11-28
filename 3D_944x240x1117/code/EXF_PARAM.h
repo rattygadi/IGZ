@@ -346,6 +346,16 @@ C     {fld}const      :: uniform default field value
       _RL     apressure_exfremo_slope
       CHARACTER*1 apressuremask
 
+      INTEGER dmdtstartdate1
+      INTEGER dmdtstartdate2
+      _RL     dmdtStartTime
+      _RL     dmdtperiod
+      _RL     dmdtRepCycle
+      _RL     dmdtconst
+      _RL     dmdt_exfremo_intercept
+      _RL     dmdt_exfremo_slope
+      CHARACTER*1 dmdtmask
+
       INTEGER tidePotStartdate1
       INTEGER tidePotStartdate2
       _RL     tidePotStartTime
@@ -482,6 +492,7 @@ C-    File names.
       CHARACTER*(128) swdownfile
       CHARACTER*(128) lwdownfile
       CHARACTER*(128) apressurefile
+      CHARACTER*(128) dmdtfile
       CHARACTER*(128) tidePotFile
       CHARACTER*(128) areamaskfile
       CHARACTER*(128) climsstfile
@@ -522,6 +533,7 @@ C-    File names.
      &       swdownstartdate1,  swdownstartdate2,
      &       lwdownstartdate1,  lwdownstartdate2,
      &       apressurestartdate1, apressurestartdate2,
+     &       dmdtstartdate1, dmdtstartdate2,
      &       tidePotStartdate1, tidePotStartdate2,
      &       areamaskstartdate1,  areamaskstartdate2,
      &       obcsNstartdate1,   obcsNstartdate2,
@@ -579,6 +591,8 @@ C-    File names.
      &       lwdownperiod,      lwdownStartTime,
      &       apressureconst,    apressureRepCycle,
      &       apressureperiod,   apressureStartTime,
+     &       dmdtconst, dmdtRepCycle,
+     &       dmdtperiod, dmdtStartTime,
      &       tidePotConst,      tidePotRepCycle,
      &       tidePotPeriod,     tidePotStartTime,
      &       areamaskconst,     areamaskRepCycle,
@@ -615,6 +629,7 @@ C-    File names.
      &       swdown_exfremo_intercept,
      &       lwdown_exfremo_intercept,
      &       apressure_exfremo_intercept,
+     &       dmdt_exfremo_intercept,
      &       tidePot_exfremo_intercept,
      &       areamask_exfremo_intercept,
      &       hflux_exfremo_slope,
@@ -639,6 +654,7 @@ C-    File names.
      &       swdown_exfremo_slope,
      &       lwdown_exfremo_slope,
      &       apressure_exfremo_slope,
+     &       dmdt_exfremo_slope,
      &       tidePot_exfremo_slope,
      &       areamask_exfremo_slope
 
@@ -665,6 +681,7 @@ C-    File names.
      &       swdownfile,    swdownmask,
      &       lwdownfile,    lwdownmask,
      &       apressurefile, apressuremask,
+     &       dmdtfile, dmdtmask,
      &       tidePotFile,   tidePotMask,
      &       areamaskfile,  areamaskmask
 
@@ -734,6 +751,7 @@ c     _RL     exf_inscal_sss
       _RL     exf_inscal_hl
       _RL     exf_inscal_evap
       _RL     exf_inscal_apressure
+      _RL     exf_inscal_dmdt
       _RL     exf_inscal_runoff
       _RL     exf_inscal_runoftemp
       _RL     exf_inscal_saltflx
@@ -754,6 +772,8 @@ c     _RL     exf_inscal_sss
       _RL     exf_outscal_sst
       _RL     exf_outscal_sss
       _RL     exf_outscal_apressure
+      _RL     exf_outscal_apressure
+      _RL     exf_outscal_dmdt
       _RL     exf_outscal_tidePot
       _RL     exf_outscal_areamask
 
@@ -777,6 +797,7 @@ c    &                      exf_inscal_sss,
      &                      exf_inscal_hl,
      &                      exf_inscal_evap,
      &                      exf_inscal_apressure,
+     &                      exf_inscal_dmdt,
      &                      exf_inscal_runoff,
      &                      exf_inscal_runoftemp,
      &                      exf_inscal_saltflx,
@@ -792,6 +813,7 @@ c    &                      exf_inscal_sss,
      &                      exf_outscal_sst,
      &                      exf_outscal_sss,
      &                      exf_outscal_apressure,
+     &                      exf_outscal_dmdt
      &                      exf_outscal_tidePot,
      &                      exf_outscal_areamask
 

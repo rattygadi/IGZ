@@ -289,6 +289,9 @@ c     _EXCH_XY_RL(swflux, myThid)
 #ifdef ATMOSPHERIC_LOADING
 c     _EXCH_XY_RL(apressure, myThid)
 #endif
+#ifdef IGZ_INTRUSIONS
+c     _EXCH_XY_RL(dmdt, myThid)
+#endif
 #ifdef EXF_SEAICE_FRACTION
 c     _EXCH_XY_RL(areamask, myThid)
 #endif

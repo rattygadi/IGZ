@@ -91,6 +91,10 @@ C       If defined, atmospheric pressure can be read-in from files.
 C   WARNING: this flag is set (define/undef) in CPP_OPTIONS.h
 C            and cannot be changed here (in EXF_OPTIONS.h)
 C
+C   >>> IGZ_INTRUSIONS <<<
+C       If defined, seawater intrusions under grounded ice at tidal
+C       frequencies can happen
+C
 C   >>> EXF_ALLOW_TIDES <<<
 C       If defined, 2-D tidal geopotential can be read-in from files
 C

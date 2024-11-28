@@ -409,6 +409,22 @@ C-    Atmos. pressure forcing
      I     myTime, myIter, myThid )
 #endif
 
+#ifdef IGZ_INTRUSIONS
+C-    mass-change ice dynamic tendency
+      CALL EXF_SET_FLD(
+     I     'dmdt', dmdtfile, dmdtmask,
+     I     dmdtStartTime, dmdtperiod, dmdtRepCycle,
+     I     exf_inscal_dmdt,
+     I     dmdt_exfremo_intercept, dmdt_exfremo_slope,
+     U     dmdt, dmdt0, dmdt1,
+#ifdef USE_EXF_INTERPOLATION
+     I     dmdt_lon0, dmdt_lon_inc,
+     I     dmdt_lat0, dmdt_lat_inc,
+     I     dmdt_nlon,dmdt_nlat,xC,yC, dmdt_interpMethod,
+#endif
+     I     myTime, myIter, myThid )
+#endif
+
 #ifdef EXF_ALLOW_TIDES
 C-    Tidal geopotential
       CALL EXF_SET_FLD(

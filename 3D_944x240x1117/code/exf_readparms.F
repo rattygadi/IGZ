@@ -127,6 +127,8 @@ C     Surface flux data.
      &         lwdownRepCycle,    lwdownperiod,    lwdownStartTime,
      &      apressurefile, apressurestartdate1, apressurestartdate2,
      &      apressureRepCycle, apressureperiod, apressureStartTime,
+     &           dmdtfile,      dmdtstartdate1,      dmdtstartdate2,
+     &           dmdtRepCycle,      dmdtperiod,      dmdtStartTime,
      &        tidePotFile,   tidePotStartdate1,   tidePotStartdate2,
      &        tidePotRepCycle,   tidePotPeriod,   tidePotStartTime,
      &       areamaskfile,  areamaskstartdate1,  areamaskstartdate2,
@@ -150,23 +152,24 @@ C     Surface flux data.
      &   exf_inscal_aqh,    exf_inscal_hs,       exf_inscal_hl,
      &     exf_inscal_sst,  exf_inscal_sss,
      &  exf_inscal_swflux,  exf_inscal_lwflux,   exf_inscal_precip,
-     &  exf_inscal_runoff,  exf_inscal_apressure, exf_inscal_snowprecip,
+     &  exf_inscal_runoff,  exf_inscal_apressure, exf_inscal_dmdt,
+     & exf_inscal_snowprecip,
      &  exf_inscal_runoftemp, exf_inscal_saltflx,
      &  exf_inscal_swdown,  exf_inscal_lwdown,
      & exf_inscal_climsst, exf_inscal_climsss,
      & exf_inscal_climustr, exf_inscal_climvstr,
      &  exf_outscal_hflux,  exf_outscal_ustress, exf_outscal_vstress,
      & exf_outscal_swflux,  exf_outscal_sst,     exf_outscal_sss,
-     &  exf_outscal_sflux,  exf_outscal_apressure,
+     &  exf_outscal_sflux,  exf_outscal_apressure, exf_outscal_dmdt,
      & exf_inscal_tidePot,  exf_outscal_tidePot,
      & exf_inscal_areamask, exf_outscal_areamask,
      &  hfluxconst, atempconst, aqhconst, hs_const, hl_const,
      &  sfluxconst, evapconst, precipconst, snowprecipconst,
      &  runoffconst, runoftempconst, saltflxconst, ustressconst,
      &  vstressconst, uwindconst, vwindconst, wspeedconst, swfluxconst,
-     &  lwfluxconst, swdownconst, lwdownconst, apressureconst,
-     &  tidePotConst, areamaskconst, climsstconst, climsssconst,
-     &  climustrconst, climvstrconst,
+     &  lwfluxconst, swdownconst, lwdownconst, apressureconst, 
+     & dmdtconst, tidePotConst, areamaskconst, climsstconst,
+     & climsssconst, climustrconst, climvstrconst,
      &     hflux_exfremo_intercept, hflux_exfremo_slope,
      &     atemp_exfremo_intercept, atemp_exfremo_slope,
      &     aqh_exfremo_intercept, aqh_exfremo_slope,
@@ -189,6 +192,7 @@ C     Surface flux data.
      &     swdown_exfremo_intercept, swdown_exfremo_slope,
      &     lwdown_exfremo_intercept, lwdown_exfremo_slope,
      &     apressure_exfremo_intercept, apressure_exfremo_slope,
+     &     dmdt_exfremo_intercept, dmdt_exfremo_slope,
      &     tidePot_exfremo_intercept, tidePot_exfremo_slope,
      &     areamask_exfremo_intercept, areamask_exfremo_slope,
      &     climsst_exfremo_intercept, climsst_exfremo_slope,
@@ -243,6 +247,9 @@ C     Surface flux data.
      & apressure_lon0, apressure_lon_inc,
      & apressure_lat0, apressure_lat_inc,
      & apressure_nlon, apressure_nlat, apressure_interpMethod,
+     & dmdt_lon0, dmdt_lon_inc,
+     & dmdt_lat0, dmdt_lat_inc,
+     & dmdt_nlon, dmdt_nlat, dmdt_interpMethod,
      & tidePot_lon0, tidePot_lon_inc, tidePot_lat0, tidePot_lat_inc,
      & tidePot_nlon, tidePot_nlat, tidePot_interpMethod,
      & areamask_lon0, areamask_lon_inc, areamask_lat0, areamask_lat_inc,
@@ -513,6 +520,13 @@ C     Calendar data.
       apressure_exfremo_intercept = 0.0 _d 0
       apressure_exfremo_slope = 0.0 _d 0
 
+      dmdtstartdate1     = 0
+      dmdtstartdate2     = 0
+      dmdtperiod         = 0.0 _d 0
+      dmdtconst          = 0.0 _d 0
+      dmdt_exfremo_intercept = 0.0 _d 0
+      dmdt_exfremo_slope = 0.0 _d 0
+
       tidePotStartdate1  = 0
       tidePotStartdate2  = 0
       tidePotPeriod      = 0.0 _d 0
@@ -618,6 +632,7 @@ C     Data files.
       swdownfile         = ' '
       lwdownfile         = ' '
       apressurefile      = ' '
+      dmdtfile           = ' '
       tidePotFile        = ' '
       areamaskfile       = ' '
       climsstfile        = ' '
@@ -647,6 +662,7 @@ C     Start Time.
       swdownStartTime    = UNSET_RL
       lwdownStartTime    = UNSET_RL
       apressureStartTime = UNSET_RL
+      dmdtStartTime      = UNSET_RL
       tidePotStartTime   = UNSET_RL
       areamaskStartTime  = UNSET_RL
       climsstStartTime   = UNSET_RL
@@ -690,6 +706,7 @@ c     exf_inscal_sss       =  1. _d 0
       exf_inscal_hl        =  1. _d 0
       exf_inscal_evap      =  1. _d 0
       exf_inscal_apressure =  1. _d 0
+      exf_inscal_dmdt      =  1. _d 0
       exf_inscal_runoff    =  1. _d 0
       exf_inscal_runoftemp =  1. _d 0
       exf_inscal_saltflx   =  1. _d 0
@@ -711,6 +728,7 @@ C     Output scaling factors.
       exf_outscal_sst      =  1. _d 0
       exf_outscal_sss      =  1. _d 0
       exf_outscal_apressure=  1. _d 0
+      exf_outscal_dmdt     =  1. _d 0
       exf_outscal_tidePot  =  1. _d 0
       exf_outscal_areamask =  1. _d 0
 
@@ -736,6 +754,7 @@ C     Output scaling factors.
       swdown_lon0    = inp_lon0
       lwdown_lon0    = inp_lon0
       apressure_lon0 = inp_lon0
+      dmdt_lon0      = inp_lon0
       tidePot_lon0   = inp_lon0
       areamask_lon0  = inp_lon0
       vstress_lat0   = inp_lat0
@@ -759,6 +778,7 @@ C     Output scaling factors.
       swdown_lat0    = inp_lat0
       lwdown_lat0    = inp_lat0
       apressure_lat0 = inp_lat0
+      dmdt_lat0      = inp_lat0
       tidePot_lat0   = inp_lat0
       areamask_lat0  = inp_lat0
       ustress_nlon   = inp_gNx
@@ -802,7 +822,9 @@ C     Output scaling factors.
       lwdown_nlon    = inp_gNx
       lwdown_nlat    = inp_gNy
       apressure_nlon = inp_gNx
+      dmdt_nlon      = inp_gNx
       apressure_nlat = inp_gNy
+      dmdt_nlat      = inp_gNy
       tidePot_nlon   = inp_gNx
       tidePot_nlat   = inp_gNy
       areamask_nlon  = inp_gNx
@@ -828,6 +850,7 @@ C     Output scaling factors.
       swdown_lon_inc    = inp_dLon
       lwdown_lon_inc    = inp_dLon
       apressure_lon_inc = inp_dLon
+      dmdt_lon_inc      = inp_dLon
       tidePot_lon_inc   = inp_dLon
       areamask_lon_inc  = inp_dLon
 
@@ -874,6 +897,7 @@ C     Output scaling factors.
         swdown_lat_inc(j)    = inp_dLat(j)
         lwdown_lat_inc(j)    = inp_dLat(j)
         apressure_lat_inc(j) = inp_dLat(j)
+        dmdt_lat_inc(j)      = inp_dLat(j)
         tidePot_lat_inc(j)   = inp_dLat(j)
         areamask_lat_inc(j)  = inp_dLat(j)
         climsst_lat_inc(j)   = inp_dLat(j)
@@ -903,6 +927,7 @@ C     Output scaling factors.
       swdown_interpMethod    =  1
       lwdown_interpMethod    =  1
       apressure_interpMethod =  1
+      dmdt_interpMethod      =  1
       tidePot_interpMethod   =  1
       areamask_interpMethod  =  1
       climsst_interpMethod   =  2
@@ -950,6 +975,7 @@ C-    Set default fldRepeatCycle to repeatPeriod
       swdownRepCycle     = repeatPeriod
       lwdownRepCycle     = repeatPeriod
       apressureRepCycle  = repeatPeriod
+      dmdtRepCycle       = repeatPeriod
       tidePotRepCycle    = repeatPeriod
       areamaskRepCycle   = repeatPeriod
       climsstRepCycle    = repeatPeriod
