@@ -23,7 +23,7 @@
 # 3. Instructions for running simulation
   cd ../run
   ln -sf ../build/mitgcmuv .
-  cp ../../IGZ/3D_944x24dmenemen/IceGroundingZone/3D_944x240x1117_bin0x1117/input/* .
+  cp ../../IGZ/3D_944x240x1117/input/* .
   ln -sf ~dmenemen/IceGroundingZone/3D_944x240x1117_bin/* .
   mpirun -np 256 ./mitgcmuv
 #    or modify a job_IGZ as needed and then:
