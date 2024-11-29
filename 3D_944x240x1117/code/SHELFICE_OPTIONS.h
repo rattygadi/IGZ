@@ -15,7 +15,7 @@ C     *==========================================================*
 C     Package-specific Options & Macros go here
 
 C     allow code for simple ISOMIP thermodynamics
-#define ALLOW_ISOMIP_TD
+#undef ALLOW_ISOMIP_TD
 
 C     allow friction velocity-dependent transfer coefficient
 C     following Holland and Jenkins, JPO, 1999
@@ -26,8 +26,14 @@ C     exceeds thresholds
 #define ALLOW_SHELFICE_REMESHING
 C     and allow to print message to STDOUT when this happens
 #define SHELFICE_REMESH_PRINT
-C     and allow GL migration
-#define ALLOW_GL_MIGRATION
+C     allows GL migration by changing the ice-shelf mass
+C#define ALLOW_GL_MIGRATION
+#undef ALLOW_GL_MIGRATION
+
+C     allows 3D GZ modeling by changing the ice-shelf mass
+C     and along the i co-ordinate.
+C#define ALLOW_3D_GZ
+#undef ALLOW_3D_GZ
 
 #endif /* ALLOW_SHELFICE */
 #endif /* SHELFICE_OPTIONS_H */
