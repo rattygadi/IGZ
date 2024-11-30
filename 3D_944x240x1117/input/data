@@ -82,7 +82,7 @@
 #Time stepping parameters
  &PARM03
  nIter0=756000,
- nTimeSteps=288000,
+ nTimeSteps=20,
 #nTimeSteps=2,
 #startTime=0.,
 #endTime=2592000.,
@@ -95,11 +95,11 @@
  dumpFreq =  43200.,
 # monitorFreq= 7200.,
 #monitorSelect=1,
- monitorFreq=3600.,
+#monitorFreq=3600.,
 #monitorFreq=1200.0,
-#monitorFreq=1,
+ monitorFreq=4.,
 #dumpFreq = 10800.0,
-#dumpFreq = 1.0,
+ dumpFreq = 4.0,
 #dumpFreq=400.0,
 #- for testing purpose:
 #nTimeSteps=20,
