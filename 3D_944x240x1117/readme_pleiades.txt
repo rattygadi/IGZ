@@ -15,7 +15,7 @@
   module load mpi-hpe/mpt
   module load hdf4/4.2.12 hdf5/1.8.18_mpt netcdf/4.4.1.1_mpt
   ../tools/genmake2 -mo ../../IGZ/3D_944x240x1117/code_noIGZ -mpi \
-   -of ../../IGZ/3D_944x240x1117/code/linux_amd64_ifort+mpi_ice_nas
+   -of ../../IGZ/build_options/linux_amd64_ifort+mpi_ice_nas
   make depend
   make -j
 
