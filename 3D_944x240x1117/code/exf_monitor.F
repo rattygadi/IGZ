@@ -190,6 +190,7 @@ C       Print some statistics about input forcing fields
         IF ( dmdtfile .NE. ' ' ) THEN
           CALL MON_WRITESTATS_RL( 1, dmdt, '_dmdt',
      &             maskInC, maskInC, rA , drF, dummyRL, myThid )
+        ENDIF
 #endif 
 #ifdef ALLOW_RUNOFF
         IF ( runofffile .NE. ' ' ) THEN

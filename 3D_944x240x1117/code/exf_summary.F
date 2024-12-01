@@ -690,13 +690,14 @@ C--   Ice-shelf dynamic mass
       IF ( dmdtfile.NE.' ' ) THEN
        CALL EXF_FLD_SUMMARY( 'ice-shelf dynamic mass tend.',
      I      dmdtfile, dmdtRepCycle, dmdtperiod,
-     I      dmdtStartTime, useEcfYearlyFields, addBlkLn, myThid )
+     I      dmdtStartTime, useExfYearlyFields, addBlkLn, myThid )
 #ifdef USE_EXF_INTERPOLATION
        CALL EXF_PRINT_INTERP( 'dmdt', dmdt_lon0,
      &   dmdt_lon_inc, dmdt_lat0, dmdt_lat_inc,
      &   dmdt_nlon, dmdt_nlat, dmdt_interpMethod, myThid )
 #endif
-       prtBlkn = .TRUE.
+       prtBlkLn = .TRUE.
+      ENDIF
 #endif /* IGZ_INTRUSIONS */ 
 
 #ifdef EXF_ALLOW_TIDES

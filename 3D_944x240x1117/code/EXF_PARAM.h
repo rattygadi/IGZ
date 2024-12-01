@@ -772,7 +772,6 @@ c     _RL     exf_inscal_sss
       _RL     exf_outscal_sst
       _RL     exf_outscal_sss
       _RL     exf_outscal_apressure
-      _RL     exf_outscal_apressure
       _RL     exf_outscal_dmdt
       _RL     exf_outscal_tidePot
       _RL     exf_outscal_areamask
@@ -813,7 +812,7 @@ c    &                      exf_inscal_sss,
      &                      exf_outscal_sst,
      &                      exf_outscal_sss,
      &                      exf_outscal_apressure,
-     &                      exf_outscal_dmdt
+     &                      exf_outscal_dmdt,
      &                      exf_outscal_tidePot,
      &                      exf_outscal_areamask
 
