@@ -11,7 +11,7 @@
 # 2. Build executable
    cd  build
    ml intel/2020.4 intelmpi/2019.9
-   ../../../tools/genmake2 -code=../code_Petermann_3D_no_IGZ/ -of=../../../tools/build_options/linux_amd64_ifort+impi_edit 
+   ../../../tools/genmake2 -code=../code_Petermann_3D_no_IGZ/ -of=../../IGZ/build_options/linux_amd64_ifort+impi_gp
    make depend
    make -j 2
 
