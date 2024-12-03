@@ -1,0 +1,18 @@
+&EXF_NML_01
+repeatPeriod = 43200,
+
+&
+
+&EXF_NML_02
+dmdtstartdate1 = 20190101,
+dmdtstartdate2 = 000000,
+dmdtperiod = 1800.0,
+dmdtfile = 'shelfice_dMdt_IGZ.r02.bin',
+
+&
+
+&EXF_NML_03
+&
+
+&EXF_NML_04
+&
