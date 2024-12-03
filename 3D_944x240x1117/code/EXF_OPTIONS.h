@@ -170,25 +170,25 @@ C
 C   =======================================================================
 
 C-  Bulk formulae related flags.
-#define ALLOW_ATM_TEMP
-#define ALLOW_ATM_WIND
-#define ALLOW_DOWNWARD_RADIATION
+#undef ALLOW_ATM_TEMP
+#undef ALLOW_ATM_WIND
+#undef ALLOW_DOWNWARD_RADIATION
 #ifdef ALLOW_ATM_TEMP
 C Note: To use ALLOW_BULKFORMULAE or EXF_READ_EVAP, needs #define ALLOW_ATM_TEMP
-# define ALLOW_BULKFORMULAE
+#undef ALLOW_BULKFORMULAE
 # undef  ALLOW_BULK_LARGEYEAGER04
 # undef  EXF_READ_EVAP
 # ifndef ALLOW_BULKFORMULAE
 C  Note: To use ALLOW_READ_TURBFLUXES, ALLOW_ATM_TEMP needs to
 C        be defined but ALLOW_BULKFORMULAE needs to be undef
-#  define ALLOW_READ_TURBFLUXES
+#  undef ALLOW_READ_TURBFLUXES
 # endif
 #endif /* ALLOW_ATM_TEMP */
 
 C-  Other forcing fields
-#define ALLOW_RUNOFF
+#undef ALLOW_RUNOFF
 #undef  ALLOW_RUNOFTEMP
-#define ALLOW_SALTFLX
+#undef ALLOW_SALTFLX
 
 #if (defined (ALLOW_BULKFORMULAE) && defined (ATMOSPHERIC_LOADING))
 C Note: To use EXF_CALC_ATMRHO, both ALLOW_BULKFORMULAE
@@ -208,8 +208,8 @@ C   unless to reproduce old results (obtained with inconsistent old code)
 #endif
 
 C-  Relaxation to monthly climatologies.
-#define ALLOW_CLIMSST_RELAXATION
-#define ALLOW_CLIMSSS_RELAXATION
+#undef ALLOW_CLIMSST_RELAXATION
+#undef ALLOW_CLIMSSS_RELAXATION
 
 C-  Allows to read-in (2-d) tidal geopotential forcing
 #undef EXF_ALLOW_TIDES
@@ -232,6 +232,7 @@ C   (no pole symmetry, single vector-comp interp, reset to 0 zonal-comp @ N.pole
 # define EXF_IREAD_USE_GLOBAL_POINTER
 #endif
 
+#define IGZ_INTRUSIONS
 #endif /* ndef ECCO_CPPOPTIONS_H */
 #endif /* ALLOW_EXF */
 #endif /* EXF_OPTIONS_H */
