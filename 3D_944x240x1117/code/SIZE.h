@@ -43,13 +43,13 @@ CEOP
       INTEGER Nr
       PARAMETER (
      &           sNx =   59,
-     &           sNy =   15,
+     &           sNy =   10,
      &           OLx =   3,
      &           OLy =   3,
      &           nSx =   1,
      &           nSy =   1,
      &           nPx =   16,
-     &           nPy =   16,
+     &           nPy =   24,
      &           Nx  = sNx*nSx*nPx,
      &           Ny  = sNy*nSy*nPy,
      &           Nr  =  1117)

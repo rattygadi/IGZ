@@ -412,6 +412,7 @@ C     from the beginning of the year.
 #endif /* EXF_SEAICE_FRACTION */
 
 #ifdef ALLOW_OBCS
+#ifndef IGZ_INTRUSIONS
       IF ( useOBCS ) THEN
 # ifdef ALLOW_DEBUG
        IF (debugMode) CALL DEBUG_CALL('GETFFIELD_START obcsN',myThid)
@@ -482,6 +483,7 @@ C     from the beginning of the year.
      I                    myThid )
       ENDIF
 # endif /* ALLOW_SEAICE */
+#endif /* IGZ_INTRUSIONS */
 #endif /* ALLOW_OBCS */
 
 #ifdef ALLOW_CLIMSST_RELAXATION

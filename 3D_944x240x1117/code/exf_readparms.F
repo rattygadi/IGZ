@@ -266,6 +266,7 @@ C     Surface flux data.
 #endif /* USE_EXF_INTERPOLATION */
 
 #ifdef ALLOW_OBCS
+#ifndef IGZ_INTRUSIONS
       NAMELIST /EXF_NML_OBCS/
      &    useOBCSYearlyFields,
      &    obcsNstartdate1,   obcsNstartdate2,   obcsNstartTime,
@@ -284,6 +285,7 @@ C     Surface flux data.
      &        siobEperiod,   siobErepCycle,
      &    siobWstartdate1,   siobWstartdate2,   siobWstartTime,
      &        siobWperiod,   siobWrepCycle
+#endif /* IGZ_INTRUSION */
 #endif /* ALLOW_OBCS */
 
       IF ( .NOT.useEXF ) THEN
@@ -1011,6 +1013,7 @@ C-
 #endif /* USE_EXF_INTERPOLATION */
 
 #ifdef ALLOW_OBCS
+#ifndef IGZ_INTRUSIONS
       IF ( useOBCS ) THEN
        WRITE(msgBuf,'(A)')
      &      'EXF_READPARMS: reading EXF_NML_OBCS'
@@ -1036,6 +1039,7 @@ C-
        IF(siobWrepCycle  .EQ.UNSET_RL) siobWrepCycle  =obcsWrepCycle
 
        IF(exf_iprec_obcs .EQ. UNSET_I) exf_iprec_obcs =exf_iprec
+#endif /* IGZ_INTRUSIONS */
 #endif /* ALLOW_OBCS */
 
       WRITE(msgBuf,'(A)')
