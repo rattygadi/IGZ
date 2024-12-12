@@ -1,6 +1,10 @@
 # Packages (lines beginning "#" are comments)
  &PACKAGES
  useOBCS=.TRUE.,
+# useShelfIce=.TRUE.,
+#useDiagnostics = .TRUE.,
+ useCAL = .TRUE.,
+ useEXF = .TRUE.,
  useShelfIce=.TRUE.,
  useDiagnostics = .TRUE.,
  &
