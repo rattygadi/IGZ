@@ -75,7 +75,7 @@ C     ' ' = no masking; 'c' = centered mask; 'w' = western mask; 's' = southern
       swdownmask   = 'c'
       lwdownmask   = 'c'
       apressuremask= 'c'
-      dmdtmask     = 'c'
+      dmdtmask     = ' '
       tidePotmask  = 'c'
       areamaskmask = 'c'
       climsstmask  = 'c'
