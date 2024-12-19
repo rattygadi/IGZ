@@ -115,8 +115,9 @@ C     EfluxP - p-component of Eliassen-Palm flux vector
       _RS  phiTide2d(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       _RS  pLoad    (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       _RS  sIceLoad (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+#ifdef IGZ_INTRUSIONS
       _RS  Dynmass  (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
-
+#endif
 #ifdef ALLOW_ADDFLUID
       COMMON /FFIELDS_ADD_FLUID/ addMass
       _RL addMass(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)

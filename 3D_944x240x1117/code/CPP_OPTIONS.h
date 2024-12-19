@@ -48,8 +48,11 @@ C-- Options to discard parts of the main code:
 C o Exclude/allow external forcing-fields load
 C   this allows to read & do simple linear time interpolation of oceanic
 C   forcing fields, if no specific pkg (e.g., EXF) is used to compute them.
-#undef EXCLUDE_FFIELDS_LOAD
+#define EXCLUDE_FFIELDS_LOAD
 
+C o Include/exclude the Ice Grounding zone (IGZ) module to transfer the 
+C   forcing from EXF package to the SHELFICE package
+#define IGZ_INTRUSIONS
 C o Include/exclude phi_hyd calculation code
 #define INCLUDE_PHIHYD_CALCULATION_CODE
 

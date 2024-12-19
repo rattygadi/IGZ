@@ -193,6 +193,7 @@ C--    quick fix to prevent ice-shelf mass to become negative
        ENDIF
 
        _EXCH_XY_RL( shelficeMass, myThid )
+       _EXCH_XY_RS( shelfIceMassDynTendency, myThid)
 #ifdef ALLOW_GL_MIGRATION
        _EXCH_XY_RL( GL_loc_1, myThid )
 #endif
@@ -205,6 +206,8 @@ C--    quick fix to prevent ice-shelf mass to become negative
       IF (useDiagnostics) THEN
         CALL DIAGNOSTICS_FILL( shelficeMass, 'SHI_mass',
      I                         0, 1, 0, 1, 1, myThid )
+        CALL DIAGNOSTICS_FILL(shelficeMassDynTendency,
+     I                   'SHI_dmdt', 0,1,0,1,1,myThid )
 #ifdef ALLOW_GL_MIGRATION
         CALL DIAGNOSTICS_FILL( GL_loc_1, 'GL      ',
      &			       0, 1, 0, 1, 1, myThid )

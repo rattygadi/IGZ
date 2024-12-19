@@ -393,6 +393,9 @@ C     Qsw used in SHORTWAVE_HEATING code & for diagnostics (<- EXCH not needed)
 #ifdef EXF_ALLOW_TIDES
       _EXCH_XY_RS( phiTide2d, myThid )
 #endif
+#ifdef IGZ_INTRUSIONS
+      _EXCH_XY_RS( Dynmass, myThid )
+#endif
 #ifdef EXF_SEAICE_FRACTION
       _EXCH_XY_RS( exf_iceFraction, myThid )
 #endif

@@ -758,8 +758,8 @@ c     ENDIF
      &      0,1,0,1,1,myThid)
        CALL DIAGNOSTICS_FILL_RS(shelfIceHeatFlux,      'SHIhtFlx',
      &      0,1,0,1,1,myThid)
-       CALL DIAGNOSTICS_FILL(shelficeMassDynTendency, 'SHI_dmdt',
-     &      0,1,0,1,1,myThid)
+C       CALL DIAGNOSTICS_FILL(shelficeMassDynTendency, 'SHI_dmdt',
+C     &      0,1,0,1,1,myThid)
 C#ifdef ALLOW_GL_MIGRATION
 C       CALL DIAGNOSTICS_FILL(GL_loc_1,'GL      ',0,1,0,1,1,myThid)
 C#endif
