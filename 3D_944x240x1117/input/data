@@ -14,10 +14,10 @@
 #viscAr=1.E-3,
 #viscAh= 2.E-1,
 #CILAN VALUES
- viscAh=10.,
-#viscAh=0.3,
- viscAr=4.E-2,
-#viscAr=2.8E-4,
+#viscAh=10.,
+ viscAh=0.3,
+#viscAr=4.E-2,
+ viscAr=2.8E-4,
 #Horizontal Bi-harmonic viscosity
  viscA4=2.5,
  no_slip_sides=.FALSE.,
@@ -81,25 +81,25 @@
 
 #Time stepping parameters
  &PARM03
- nIter0=756000,
- nTimeSteps=20,
+ nIter0=0,
+ nTimeSteps=1000.,
 #nTimeSteps=2,
 #startTime=0.,
 #endTime=2592000.,
 #endTime=3456000.,
- deltaT=4,
+ deltaT=1,
  forcing_In_AB  = .FALSE.,
  abEps=0.1,
  pChkptFreq= 43200.,
  chkptFreq = 43200.,
- dumpFreq =  43200.,
+ dumpFreq =  200.,
 # monitorFreq= 7200.,
 #monitorSelect=1,
 #monitorFreq=3600.,
-#monitorFreq=1200.0,
- monitorFreq=4.,
+ monitorFreq=100.0,
+#monitorFreq=1.0,
 #dumpFreq = 10800.0,
- dumpFreq = 4.0,
+#dumpFreq = 3600.0,
 #dumpFreq=400.0,
 #- for testing purpose:
 #nTimeSteps=20,
@@ -133,8 +133,8 @@
 
 # Input datasets
  &PARM05
- bathyFile='bathy_flat.bin',
- hydrogThetaFile='temp_ini.bin',	
- hydrogSaltFile ='salt_ini.bin',
+ bathyFile='bathy_IGZ.bin',
+ hydrogThetaFile='temp_IGZ.bin',	
+ hydrogSaltFile ='salt_IGZ.bin',
 # pSurfInitFile ='etai_ini.bin'
  &

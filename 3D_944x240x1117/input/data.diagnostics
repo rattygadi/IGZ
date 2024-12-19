@@ -18,15 +18,15 @@
   dumpAtLast   = .TRUE.,
   fields(1:12,1) = 'ETAN    ','RSURF   ','oceTAUX ','oceTAUY ',
                    'oceQnet ','oceFWflx',
-                   'SHIfwFlx','SHIhtFlx','SHIgammT','SHIgammS',
-                   'SHI_mass','SHI_dmdt',
+                   'SHIfwFlx','SHIhtFlx','SHIgammT','EXFdmdt ',
+                   'dmdtload','SHI_dmdt',
 #                  'surForcT','surForcS','TFLUX   ','SFLUX   ','oceFreez',
 #                  'TRELAX  ','SRELAX  ',
 #  fields(1,1)='ETAN'
    filename(1) = 'surfDiag',
 # frequency(1) =  2592000.,
 # frequency(1) =  86400.,
-  frequency(1) =  -3600.0,
+  frequency(1) =  -1800.0,
 #-
   fields(1:9,2) = 'RCENTER ','TOTVTEND',
                    'hFactorC','hFactorW','hFactorS','TOTSTEND',
@@ -74,7 +74,7 @@
 #--------------------
  &DIAG_STATIS_PARMS
 #- regional mask: =1 : under-ice ; =2 : open-ocean
-  diagSt_regMaskFile='under_Ice_mask.bin',
+  diagSt_regMaskFile='under_Ice_mask_IGZ.bin',
   nSetRegMskFile=1,
   set_regMask(1:2)= 1,  1,
   val_regMask(1:2)= 1., 2.,
